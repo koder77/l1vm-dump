@@ -189,7 +189,7 @@ typedef double                  F8;     /* DOUBLE */
 
 
 // for time functions
-struct tm *tm;
+// struct tm *tm;
 
 
 struct threaddata
@@ -268,20 +268,6 @@ struct call_label
 // shell arguments
 #define MAXSHELLARGS			32
 #define MAXSHELLARGLEN			256
-
-#if ! JIT_COMPILER
-struct opcode opcode[MAXOPCODES];
-#endif
-
-// This is type of function we will generate
-// for JIT-compiler
-typedef void (*Func)(void);
-
-struct JIT_code
-{
-	Func fn;
-};
-
 
 // 61 opcodes
 #define PUSHB   0

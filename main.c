@@ -65,23 +65,6 @@ U1 silent_run = 0;				// switch startup and status messages of: "-q" flag on she
 
 typedef U1* (*dll_func)(U1 *sp, U1 *sp_top, U1 *sp_bottom, U1 *data);
 
-struct module
-{
-    U1 name[512];
-
-#if __linux__
-    void *lptr;
-#endif
-
-#if _WIN32
-    HINSTANCE lptr;
-#endif
-
-    dll_func func[MODULES_MAXFUNC];
-};
-
-struct module modules[MODULES];
-
 struct data_info data_info[MAXDATAINFO];
 S8 data_info_ind ALIGN = -1;
 
@@ -94,8 +77,6 @@ S8 retcode ALIGN = 0;
 // shell arguments
 U1 shell_args[MAXSHELLARGS][MAXSHELLARGLEN];
 S4 shell_args_ind = -1;
-
-struct threaddata *threaddata;
 
 void cleanup (void)
 {
@@ -154,13 +135,13 @@ int main (int ac, char *av[])
 			}
 		}
 	}
-	
+
 	if (load_object ((U1 *) av[1]))
 	{
 		cleanup ();
 		exit (1);
 	}
-    
+
 	cleanup ();
 	exit (0);
 }

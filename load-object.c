@@ -22,7 +22,7 @@
 
 extern U1 *code;
 extern U1 *data;
-struct data_info data_info[MAXDATAINFO];
+extern struct data_info data_info[MAXDATAINFO];
 extern S8 data_info_ind ALIGN;
 
 extern S8 data_size ALIGN;
@@ -161,8 +161,8 @@ S2 load_object (U1 *name)
 
 	// bzip compressed file flag
 	U1 bzip2 = 0;
-	
-	
+
+
 	// new for dump-byte-data =================================================
 	FILE *dump;
 	U1 dump_filename[256];
@@ -674,17 +674,17 @@ S2 load_object (U1 *name)
 				{
 					sprintf ((char *) dump_filename, "%lli.raw", dump_filename_num);
 				}
-				
+
 				dump = fopen ((const char *) dump_filename, "w");
 				if (dump == NULL)
 				{
 					printf ("ERROR: can't open dump file '%s'!\n", dump_filename);
 					return (1);
 				}
-				
+
 				dump_ind = 0;
 				printf ("dumping to file: '%s' ...\n", dump_filename);
-				
+
 				for (k = 1; k <= data_info[j].size; k++)
 				{
 					readsize = fread (&byte, sizeof (U1), 1, fptr);
@@ -700,20 +700,20 @@ S2 load_object (U1 *name)
 					}
 
 					data[i] = byte;
-					
+
 					// write into dunmp file
 					fputc (byte, dump);
 					dump_ind++;
-					
+
 					i++;
 				}
-				
+
 				printf ("dumped %lli bytes\n\n", dump_ind);
 				fclose (dump);
-				
+
 				data_info[j].end = i - 1;
 				data_info[j].type_size = sizeof (U1);
-				
+
 				dump_filename_num++;
 				break;
 
